@@ -20,6 +20,7 @@ pipeline {
           },
           "Java Doc": {
             sh 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
+          }
         )
       }
     }
