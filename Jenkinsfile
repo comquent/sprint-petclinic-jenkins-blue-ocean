@@ -15,17 +15,20 @@ pipeline {
                 sh "mvn install -Dmaven.test.skip=true"
             }
         }
-        stage('Test'){
+        
+        stage('Test') {
             steps {
                 sh "mvn test"
             }
         }
+        
         stage('Report'){
             steps {
               junit 'target/**/*.xml'
               archive 'target/*.jar'
             }
         }
+        
         stage('Deploy') {
             steps {
               echo 'deploy'
