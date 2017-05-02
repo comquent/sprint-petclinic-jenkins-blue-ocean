@@ -2,7 +2,7 @@ pipeline {
     agent any 
 
     environment {
-        JAVA_HOME = tool 'Java 8'
+        JAVA_HOME = '/home/ec2-user/tools/Java_8'
     }
     
     tools {
