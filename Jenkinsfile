@@ -8,8 +8,17 @@ pipeline {
     }
     stage('Test & Analyse') {
       steps {
-        sh 'mvn test'
-       }
+        parallel(
+          "Test & Analyse": {
+            sh 'mvn test'
+            
+          },
+          "Analyse": {
+            echo 'Analyse'
+            
+          }
+        )
+      }
     }
     stage('Report') {
       steps {
