@@ -17,7 +17,13 @@ pipeline {
         }
         stage('Test'){
             steps {
+                sh "mvn test"
+            }
+        }
+        stage('Report'){
+            steps {
               junit 'target/**/*.xml'
+              archive 'target/*.jar'
             }
         }
         stage('Deploy') {
