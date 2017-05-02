@@ -14,8 +14,9 @@ pipeline {
             
           },
           "Analyse": {
-            echo 'Analyse'
-            
+            sh 'mvn findbugs:findbugs'
+            sh 'mvn checkstyle:checkstyle'
+            sh 'mvn pmd:pmd'
           },
           "Java Doc": {
             sh 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
