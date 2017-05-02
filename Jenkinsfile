@@ -1,6 +1,10 @@
 pipeline {
     agent any 
 
+    environment {
+        JAVA_HOME = tool 'Java 8'
+    }
+    
     tools {
         maven 'MVN 3.3'
     }
