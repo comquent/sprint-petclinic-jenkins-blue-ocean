@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps { 
+                sh "'${mvnHome}/bin/mvn' install -Dmaven.test.skip=true"
             }
         }
         stage('Test'){
