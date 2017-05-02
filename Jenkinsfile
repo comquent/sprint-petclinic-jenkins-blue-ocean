@@ -3,22 +3,20 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        parallel(
-          "Build": {
             sh 'mvn install -Dmaven.test.skip=true'
-            
+        )
+      }
+    }
+    stage('Test & Analyse') {
+        parallel(
+          "Test": {
+            sh 'mvn test'
           },
           "Java Doc": {
             sh 'mvn javadoc:javadoc'
             
           }
-        )
-      }
-    }
-    stage('Test') {
-      steps {
-        sh 'mvn test'
-      }
+       }
     }
     stage('Report') {
       steps {
