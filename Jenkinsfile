@@ -9,14 +9,16 @@ pipeline {
     stage('Test & Analyse') {
       steps {
         parallel(
-          "Test & Analyse": {
+          "Test": {
             sh 'mvn test'
             
           },
           "Analyse": {
             echo 'Analyse'
             
-          }
+          },
+          "Java Doc": {
+            sh 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
         )
       }
     }
