@@ -6,35 +6,9 @@ pipeline {
         sh 'mvn install -Dmaven.test.skip=true'
       }
     }
-    stage('Test & Analyse') {
+    stage('Test') {
       steps {
-        parallel(
-          "Test": {
-            sh 'mvn test'
-            
-          },
-          "Analyse": {
-            sh 'mvn findbugs:findbugs'
-            sh 'mvn checkstyle:checkstyle'
-            sh 'mvn pmd:pmd'
-            
-          },
-          "Java Doc": {
-            sh 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
-            
-          }
-        )
-      }
-    }
-    stage('Report') {
-      steps {
-        junit 'target/**/*.xml'
-        archive 'target/*.jar'
-      }
-    }
-    stage('Deploy') {
-      steps {
-        echo 'deploy'
+        sh 'mvn test'
       }
     }
   }
