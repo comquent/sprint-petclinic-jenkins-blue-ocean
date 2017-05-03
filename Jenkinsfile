@@ -8,7 +8,34 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh 'mvn test'
+        parallel(
+          "Test": {
+            sh 'mvn test'
+            
+          },
+          "Inspection": {
+            sh '''mvn mvn findbugs:findbugs
+mvn checkstyle:checkstyle
+mvn pmd:pmd'''
+            
+          },
+          "Documentation": {
+            sh 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
+            
+          }
+        )
+      }
+    }
+    stage('Report') {
+      steps {
+        junit 'target/**/*.xml'
+        archiveArtifacts 'target/*.jar'
+        mail(subject: 'Build and Test Complete', body: 'We are finished!', to: 'hello@comquent.de')
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo 'Deploy me!'
       }
     }
   }
