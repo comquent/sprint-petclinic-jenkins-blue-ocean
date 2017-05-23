@@ -9,10 +9,6 @@ pipeline {
     stage('Test') {
       steps {
         parallel(
-          "Test": {
-            sh 'mvn test'
-            
-          },
           "Inspection": {
             sh '''mvn findbugs:findbugs
 
@@ -25,20 +21,12 @@ mvn pmd:pmd'''
           "Documentation": {
             sh 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
             
+          },
+          "Test": {
+            sh 'mvn test'
+            
           }
         )
-      }
-    }
-    stage('Report') {
-      steps {
-        junit 'target/**/*.xml'
-        archiveArtifacts 'target/*.jar'
-        mail(subject: 'Build and Test Complete', body: 'We are finished!', to: 'hello@comquent.de')
-      }
-    }
-    stage('Deploy') {
-      steps {
-        echo 'Deploy me!'
       }
     }
   }
