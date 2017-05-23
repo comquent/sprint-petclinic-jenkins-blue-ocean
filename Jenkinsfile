@@ -14,7 +14,10 @@ pipeline {
             
           },
           "Inspection": {
-            sh '''mvn findbugs:findbugs
+            sh '''mvn mvn findbugs:findbugs
+
+
+
 mvn checkstyle:checkstyle
 mvn pmd:pmd'''
             
